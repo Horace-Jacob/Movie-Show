@@ -1,100 +1,72 @@
 import React from "react";
+import { Movie } from "../../interfaces/MovieInterface";
 
 interface ModalProps {
   IsOpen: boolean;
+  onClose: () => void;
+  movieData: Movie | undefined;
 }
 
-export const Modal: React.FC<ModalProps> = ({ IsOpen }) => {
+export const Modal: React.FC<ModalProps> = ({ IsOpen, onClose, movieData }) => {
   return (
-    <div className="container flex justify-center items-center">
+    <div
+      className={`fixed left-0 top-0 z-[1055] ${
+        IsOpen ? "" : "hidden"
+      } h-full w-full overflow-y-auto overflow-x-hidden outline-none`}
+      tabIndex={-1}
+    >
       <div
-        id="extralarge-modal"
-        tabIndex={-1}
-        className={`fixed inset-0 z-50 ${
-          IsOpen ? "" : "hidden"
-        } flex justify-center items-center`}
+        className={`pointer-events-none relative w-auto ${
+          IsOpen ? "" : "opacity-0"
+        } transition-all duration-300 ease-in-out min-[0px]:m-0 min-[0px]:h-full min-[0px]:max-w-none`}
       >
-        <div className="w-full max-w-7xl">
-          <div className="bg-white rounded-lg shadow dark:bg-gray-700">
-            <div className="flex items-center justify-between p-5 border-b rounded-t dark:border-gray-600">
-              <h3 className="text-xl font-medium text-gray-900 dark:text-white">
-                Extra Large modal
-              </h3>
-              <button
-                type="button"
-                className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                data-modal-hide="extralarge-modal"
+        <div className="pointer-events-auto relative flex w-full flex-col rounded-md bg-white bg-clip-padding text-current shadow-lg outline-none dark:bg-neutral-600 min-[0px]:h-full min-[0px]:rounded-none min-[0px]:border-0">
+          <div className="flex flex-shrink-0 items-center justify-between rounded-t-md border-b-2 border-neutral-100 border-opacity-100 p-4 dark:border-opacity-50 min-[0px]:rounded-none">
+            <h5
+              className="text-xl font-medium leading-normal text-neutral-800 dark:text-neutral-200"
+              id="exampleModalFullscreenLabel"
+            >
+              Modal title
+            </h5>
+            <button
+              type="button"
+              className="box-content rounded-none border-none hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none"
+              aria-label="Close"
+              onClick={onClose}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="h-6 w-6"
               >
-                <svg
-                  aria-hidden="true"
-                  className="w-5 h-5"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                    clipRule="evenodd"
-                  ></path>
-                </svg>
-                <span className="sr-only">Close modal</span>
-              </button>
-            </div>
-            <div className="p-6 space-y-6 bg-black">
-              <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                With less than a month to go before the European Union enacts
-                new consumer privacy laws for its citizens, companies around the
-                world are updating their terms of service agreements to comply.
-              </p>
-              <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                The European Union’s General Data Protection Regulation
-                (G.D.P.R.) goes into effect on May 25 and is meant to ensure a
-                common set of data rights in the European Union. It requires
-                organizations to notify users as soon as possible of high-risk
-                data breaches that could personally affect them.
-              </p>
-              <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                With less than a month to go before the European Union enacts
-                new consumer privacy laws for its citizens, companies around the
-                world are updating their terms of service agreements to comply.
-              </p>
-              <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                The European Union’s General Data Protection Regulation
-                (G.D.P.R.) goes into effect on May 25 and is meant to ensure a
-                common set of data rights in the European Union. It requires
-                organizations to notify users as soon as possible of high-risk
-                data breaches that could personally affect them.
-              </p>
-              <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                With less than a month to go before the European Union enacts
-                new consumer privacy laws for its citizens, companies around the
-                world are updating their terms of service agreements to comply.
-              </p>
-              <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                The European Union’s General Data Protection Regulation
-                (G.D.P.R.) goes into effect on May 25 and is meant to ensure a
-                common set of data rights in the European Union. It requires
-                organizations to notify users as soon as possible of high-risk
-                data breaches that could personally affect them.
-              </p>
-            </div>
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
           </div>
 
-          <div className="flex items-center p-6 space-x-2 border-t bg-black border-gray-200 rounded-b dark:border-gray-600">
+          <div className="bg-gradient-to-r from-neutral-800 via-neutral-800 to-emerald-800 relative p-4 min-[0px]:overflow-y-auto">
+            <p className="px-10 text-center leading-[3rem]">
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+              Similique nesciunt repellat consectetur rem nam, facere, expedita
+              perspiciatis accusamus beatae aliquid dicta fugit ab minima qui
+              inventore. Animi tenetur tempore consequuntur! Ducimus,
+            </p>
+          </div>
+
+          <div className="mt-auto flex flex-shrink-0 flex-wrap items-center justify-end rounded-b-md border-t-2 border-neutral-100 border-opacity-100 p-4 dark:border-opacity-50 min-[0px]:rounded-none">
             <button
-              data-modal-hide="extralarge-modal"
               type="button"
-              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              className="inline-block rounded bg-primary-100 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-primary-700 transition duration-150 ease-in-out hover:bg-primary-accent-100 focus:bg-primary-accent-100 focus:outline-none focus:ring-0 active:bg-primary-accent-200"
+              data-te-modal-dismiss
             >
-              I accept
-            </button>
-            <button
-              data-modal-hide="extralarge-modal"
-              type="button"
-              className="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
-            >
-              Decline
+              Close
             </button>
           </div>
         </div>

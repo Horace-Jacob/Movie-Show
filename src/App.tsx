@@ -6,14 +6,14 @@ import { ComedyRomance } from "./components/ComedyRomance";
 
 function App() {
   return (
-    <>
+    <div>
       <div>
         <Navbar />
         <PopularNow />
         <ActionAdventure />
         <ComedyRomance />
       </div>
-    </>
+    </div>
   );
 }
 

@@ -13,9 +13,16 @@ export const PopularNow = () => {
   const [movies, setMovies] = React.useState<Movie[]>([]);
   const [pageNumber, setPageNumber] = React.useState<number>(1);
   const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
+  const [movieData, setMoviedata] = React.useState<Movie>();
 
-  const handleModal = () => {
-    setIsModalOpen((prevState) => !prevState);
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleModalOpen = (moviedata: Movie) => {
+    console.log(moviedata);
+    setMoviedata(moviedata);
+    setIsModalOpen(true);
   };
 
   React.useEffect(() => {
@@ -37,45 +44,51 @@ export const PopularNow = () => {
   };
 
   return (
-    <section className="overflow-hidden container mx-auto">
-      <div className="py-3">
-        <h1 className="mb-4 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl">
-          <span className="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">
-            Popular Now
-          </span>
-        </h1>
-        <Swiper
-          spaceBetween={10}
-          slidesPerView={9}
-          onSlideChange={handleSlideChange}
-          observer={true}
-          observeSlideChildren={true}
-        >
-          {!Array.isArray(movies) ? (
-            <div>loading...</div>
-          ) : (
-            movies.slice(20, movies.length).map((value, index) => (
-              <SwiperSlide key={index}>
-                <div
-                  className="h-full overflow-visible w-full cursor-pointer"
-                  onClick={handleModal}
-                >
-                  <div className="h-60 flex">
-                    <img
-                      className="rounded-3xl w-full"
-                      src={
-                        "https://image.tmdb.org/t/p/w500" + value.poster_path
-                      }
-                      alt=""
-                    />
+    <div>
+      <section className="overflow-hidden container mx-auto">
+        <div className="py-3">
+          <h1 className="mb-4 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">
+              Popular Now
+            </span>
+          </h1>
+          <Swiper
+            spaceBetween={10}
+            slidesPerView={9}
+            onSlideChange={handleSlideChange}
+            observer={true}
+            observeSlideChildren={true}
+          >
+            {!Array.isArray(movies) ? (
+              <div>loading...</div>
+            ) : (
+              movies.slice(20, movies.length).map((value, index) => (
+                <SwiperSlide key={index}>
+                  <div
+                    className="h-full overflow-visible w-full cursor-pointer"
+                    onClick={() => handleModalOpen(value)}
+                  >
+                    <div className="h-60 flex">
+                      <img
+                        className="rounded-3xl w-full"
+                        src={
+                          "https://image.tmdb.org/t/p/w500" + value.poster_path
+                        }
+                        alt=""
+                      />
+                    </div>
                   </div>
-                </div>
-              </SwiperSlide>
-            ))
-          )}
-        </Swiper>
-        <Modal IsOpen={isModalOpen} />
-      </div>
-    </section>
+                </SwiperSlide>
+              ))
+            )}
+          </Swiper>
+        </div>
+      </section>
+      <Modal
+        IsOpen={isModalOpen}
+        onClose={handleModalClose}
+        movieData={movieData}
+      />
+    </div>
   );
 };
