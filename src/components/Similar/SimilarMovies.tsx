@@ -1,20 +1,28 @@
 import React from "react";
-import { Movie, MovieListResponse } from "../interfaces/MovieInterface";
-import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { fetchRomanceAsync } from "../features/ComedyRomance/romanceThunks";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { AccessToken } from "../constant";
-import { romanceData } from "../features/ComedyRomance/romanceSlice";
+import { AccessToken } from "../../constant";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { Movie, MovieListResponse } from "../../interfaces/MovieInterface";
+import { similarData } from "../../features/SimilarMovies/similarSlice";
+import { fetchSimilarAsync } from "../../features/SimilarMovies/similarThunks";
 
-export const ComedyRomance = () => {
-  const data: MovieListResponse = useAppSelector(romanceData);
+interface SimilarMovieProps {
+  movieID: number;
+}
+
+export const SimilarMovies: React.FC<SimilarMovieProps> = ({ movieID }) => {
+  const data: MovieListResponse = useAppSelector(similarData);
   const dispatch = useAppDispatch();
   const [movies, setMovies] = React.useState<Movie[]>([]);
   const [pageNumber, setPageNumber] = React.useState<number>(1);
 
   React.useEffect(() => {
     dispatch(
-      fetchRomanceAsync({ access_token: AccessToken, page: pageNumber })
+      fetchSimilarAsync({
+        access_token: AccessToken,
+        movieID: movieID,
+        page: pageNumber,
+      })
     );
   }, [dispatch, pageNumber]);
 
@@ -31,11 +39,11 @@ export const ComedyRomance = () => {
   };
 
   return (
-    <section className="overflow-hidden container mx-auto">
+    <div>
       <div className="py-3">
-        <h1 className="mb-4 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-3xl">
-          <span className="bg-gradient-to-r from-gray-400 via-pink-400 to-pink-600 bg-clip-text text-transparent">
-            Comedy Romance
+        <h1 className="mb-4 text-2xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-3xl">
+          <span className="bg-gradient-to-r from-neutral-200 via-violet-600 to-violet-600 bg-clip-text text-transparent">
+            Similar Movies
           </span>
         </h1>
         <Swiper
@@ -50,7 +58,7 @@ export const ComedyRomance = () => {
           ) : (
             movies.slice(20, movies.length).map((value, index) => (
               <SwiperSlide key={index}>
-                <div className="h-full overflow-visible w-full">
+                <div className="h-full overflow-visible w-full cursor-pointer">
                   <div className="h-60 flex">
                     <img
                       className="rounded-3xl w-full"
@@ -66,6 +74,6 @@ export const ComedyRomance = () => {
           )}
         </Swiper>
       </div>
-    </section>
+    </div>
   );
 };

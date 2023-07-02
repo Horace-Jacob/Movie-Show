@@ -13,6 +13,39 @@ export const fetchPosterMovie = async (access_token: string) => {
   return res;
 };
 
+export const fetchMovieDetails = async (
+  access_token: string,
+  movieID: number | undefined
+) => {
+  const res = await axios.get(
+    `https://api.themoviedb.org/3/movie/${movieID}?language=en-US`,
+    {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+        Accept: "application/json",
+      },
+    }
+  );
+  return res;
+};
+
+export const fetchSimilarMovies = async (
+  access_token: string,
+  movieID: number,
+  pageNumber: number
+) => {
+  const res = await axios.get(
+    `https://api.themoviedb.org/3/movie/${movieID}/similar?language=en-US&page=${pageNumber}`,
+    {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+        Accept: "application/json",
+      },
+    }
+  );
+  return res;
+};
+
 export const fetchPopularMovies = async (
   access_token: string,
   page: number

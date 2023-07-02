@@ -3,6 +3,7 @@ import posterSlice from "../features/PosterMovie/posterSlice";
 import popularSlice from "../features/PopularMovies/popularSlice";
 import actionSlice from "../features/ActionAdventure/actionSlice";
 import romanceSlice from "../features/ComedyRomance/romanceSlice";
+import similarSlice from "../features/SimilarMovies/similarSlice";
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     popular: popularSlice,
     action: actionSlice,
     romance: romanceSlice,
+    similar: similarSlice,
   },
 });
 

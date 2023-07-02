@@ -1,11 +1,16 @@
 import React from "react";
-import { Movie, MovieListResponse } from "../interfaces/MovieInterface";
+import {
+  Movie,
+  MovieDetails,
+  MovieListResponse,
+} from "../interfaces/MovieInterface";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { fetchPopularAsync } from "../features/PopularMovies/popularThunks";
 import { popularData } from "../features/PopularMovies/popularSlice";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { AccessToken } from "../constant";
 import { Modal } from "./Modal/Modal";
+import { fetchMovieDetails } from "../api/api";
 
 export const PopularNow = () => {
   const data: MovieListResponse = useAppSelector(popularData);
@@ -13,15 +18,20 @@ export const PopularNow = () => {
   const [movies, setMovies] = React.useState<Movie[]>([]);
   const [pageNumber, setPageNumber] = React.useState<number>(1);
   const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
-  const [movieData, setMoviedata] = React.useState<Movie>();
+  const [movieDetails, setMovieDetails] = React.useState<MovieDetails>();
+
+  const getMovieDetails = async (movieid: number) => {
+    const res = await fetchMovieDetails(AccessToken, movieid);
+    console.log(movieid);
+    setMovieDetails(res.data);
+  };
 
   const handleModalClose = () => {
     setIsModalOpen(false);
   };
 
-  const handleModalOpen = (moviedata: Movie) => {
-    console.log(moviedata);
-    setMoviedata(moviedata);
+  const handleModalOpen = async (movieid: number) => {
+    await getMovieDetails(movieid);
     setIsModalOpen(true);
   };
 
@@ -47,8 +57,8 @@ export const PopularNow = () => {
     <div>
       <section className="overflow-hidden container mx-auto">
         <div className="py-3">
-          <h1 className="mb-4 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl">
-            <span className="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">
+          <h1 className="mb-4 text-2xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-3xl">
+            <span className="bg-gradient-to-r from-neutral-200 via-violet-600 to-violet-600 bg-clip-text text-transparent">
               Popular Now
             </span>
           </h1>
@@ -66,7 +76,7 @@ export const PopularNow = () => {
                 <SwiperSlide key={index}>
                   <div
                     className="h-full overflow-visible w-full cursor-pointer"
-                    onClick={() => handleModalOpen(value)}
+                    onClick={() => handleModalOpen(value.id)}
                   >
                     <div className="h-60 flex">
                       <img
@@ -87,7 +97,7 @@ export const PopularNow = () => {
       <Modal
         IsOpen={isModalOpen}
         onClose={handleModalClose}
-        movieData={movieData}
+        movieDetail={movieDetails}
       />
     </div>
   );
