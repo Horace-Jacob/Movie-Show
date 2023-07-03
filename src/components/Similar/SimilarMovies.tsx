@@ -24,7 +24,7 @@ export const SimilarMovies: React.FC<SimilarMovieProps> = ({ movieID }) => {
         page: pageNumber,
       })
     );
-  }, [dispatch, pageNumber]);
+  }, [dispatch, pageNumber, movieID]);
 
   React.useEffect(() => {
     if (Array.isArray(data.results) && data.results.length > 0) {
@@ -47,8 +47,8 @@ export const SimilarMovies: React.FC<SimilarMovieProps> = ({ movieID }) => {
           </span>
         </h1>
         <Swiper
-          spaceBetween={10}
-          slidesPerView={9}
+          spaceBetween={12}
+          slidesPerView={7}
           onSlideChange={handleSlideChange}
           observer={true}
           observeSlideChildren={true}

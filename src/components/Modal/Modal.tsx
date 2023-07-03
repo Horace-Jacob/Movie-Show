@@ -13,6 +13,15 @@ export const Modal: React.FC<ModalProps> = ({
   onClose,
   movieDetail,
 }) => {
+
+  React.useEffect(() => {
+    if(IsOpen){
+      document.body.classList.add("overflow-y-hidden");
+    }else{
+      document.body.classList.remove("overflow-y-hidden");
+    }
+  }, [IsOpen]);
+  
   return (
     <>
       {movieDetail !== undefined ? (
@@ -20,7 +29,7 @@ export const Modal: React.FC<ModalProps> = ({
           data-te-modal-init
           className={`fixed left-0 top-0 z-[1055] ${
             IsOpen ? "" : "hidden"
-          } h-full w-full overflow-y-auto overflow-x-hidden outline-none`}
+          } ${IsOpen ? "modal-open" : ""} h-full w-full overflow-y-auto overflow-x-hidden outline-none`}
           id="exampleModalFullscreen"
           tabIndex={-1}
           aria-labelledby="exampleModalFullscreenLabel"
@@ -29,7 +38,7 @@ export const Modal: React.FC<ModalProps> = ({
           <div
             data-te-modal-dialog-ref
             className={`pointer-events-none relative w-auto  ${
-              IsOpen ? "" : "opacity-0"
+              IsOpen ? "opacity-1" : "opacity-0"
             } transition-all duration-300 ease-in-out min-[0px]:m-0 min-[0px]:h-full min-[0px]:max-w-none`}
           >
             <div className="pointer-events-auto relative flex w-full flex-col rounded-md bg-black bg-clip-padding text-current shadow-lg outline-none  min-[0px]:h-full min-[0px]:rounded-none min-[0px]:border-0">
@@ -73,6 +82,7 @@ export const Modal: React.FC<ModalProps> = ({
                           "https://image.tmdb.org/t/p/w500" +
                           movieDetail?.poster_path
                         }
+                        rel="noreferrer"
                         target="_blank"
                       >
                         <img
@@ -118,11 +128,11 @@ export const Modal: React.FC<ModalProps> = ({
                             cy="40"
                           />
                           <circle
-                            className="text-green-900"
+                            className="text-green-800"
                             strokeWidth="5"
                             strokeDasharray={30 * 2 * Math.PI}
                             strokeDashoffset={
-                              movieDetail?.vote_average != undefined
+                              movieDetail?.vote_average !== undefined
                                 ? 30 * 2 * Math.PI -
                                   ((movieDetail.vote_average * 10) / 100) *
                                     30 *
@@ -142,7 +152,7 @@ export const Modal: React.FC<ModalProps> = ({
                           className="absolute text-xl text-white"
                           x-text={100}
                         >
-                          {movieDetail?.vote_average != undefined
+                          {movieDetail?.vote_average !== undefined
                             ? Math.floor(movieDetail?.vote_average * 10) + "%"
                             : ""}
                         </span>

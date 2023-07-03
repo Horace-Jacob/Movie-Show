@@ -63,8 +63,21 @@ export const PopularNow = () => {
             </span>
           </h1>
           <Swiper
-            spaceBetween={10}
-            slidesPerView={9}
+            spaceBetween={12}
+            // breakpoints={{
+            //   // when window width is >= 640px
+            //   640: {
+            //     width: 640,
+            //     slidesPerView: 5,
+            //   },
+            //   // when window width is >= 768px
+            //   768: {
+            //     width: 768,
+            //     slidesPerView: 7,
+            //   },
+
+            // }}
+            slidesPerView={7}
             onSlideChange={handleSlideChange}
             observer={true}
             observeSlideChildren={true}

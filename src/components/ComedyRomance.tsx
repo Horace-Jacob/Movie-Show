@@ -39,8 +39,8 @@ export const ComedyRomance = () => {
           </span>
         </h1>
         <Swiper
-          spaceBetween={10}
-          slidesPerView={9}
+          spaceBetween={12}
+          slidesPerView={7}
           onSlideChange={handleSlideChange}
           observer={true}
           observeSlideChildren={true}
