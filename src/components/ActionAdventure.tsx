@@ -1,16 +1,39 @@
 import React from "react";
-import { Movie, MovieListResponse } from "../interfaces/MovieInterface";
+import {
+  Movie,
+  MovieDetails,
+  MovieListResponse,
+} from "../interfaces/MovieInterface";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { fetchActionAsync } from "../features/ActionAdventure/actionThunks";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { AccessToken } from "../constant";
 import { actionData } from "../features/ActionAdventure/actionSlice";
+import { Modal } from "./Modal/Modal";
+import { fetchMovieDetails } from "../api/api";
 
 export const ActionAdventure = () => {
   const data: MovieListResponse = useAppSelector(actionData);
   const dispatch = useAppDispatch();
   const [movies, setMovies] = React.useState<Movie[]>([]);
   const [pageNumber, setPageNumber] = React.useState<number>(1);
+  const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
+  const [movieDetails, setMovieDetails] = React.useState<MovieDetails>();
+
+  const getMovieDetails = async (movieid: number) => {
+    const res = await fetchMovieDetails(AccessToken, movieid);
+    console.log(movieid);
+    setMovieDetails(res.data);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleModalOpen = async (movieid: number) => {
+    await getMovieDetails(movieid);
+    setIsModalOpen(true);
+  };
 
   React.useEffect(() => {
     dispatch(fetchActionAsync({ access_token: AccessToken, page: pageNumber }));
@@ -48,8 +71,11 @@ export const ActionAdventure = () => {
           ) : (
             movies.slice(20, movies.length).map((value, index) => (
               <SwiperSlide key={index}>
-                <div className="h-full overflow-visible w-full">
-                  <div className="h-60 flex">
+                <div
+                  className="h-full overflow-visible w-full cursor-pointer"
+                  onClick={() => handleModalOpen(value.id)}
+                >
+                  <div className="h-72 flex">
                     <img
                       className="rounded-3xl w-full"
                       src={
@@ -63,6 +89,11 @@ export const ActionAdventure = () => {
             ))
           )}
         </Swiper>
+        <Modal
+          IsOpen={isModalOpen}
+          onClose={handleModalClose}
+          movieDetail={movieDetails}
+        />
       </div>
     </section>
   );

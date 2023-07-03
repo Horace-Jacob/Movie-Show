@@ -91,7 +91,7 @@ export const PopularNow = () => {
                     className="h-full overflow-visible w-full cursor-pointer"
                     onClick={() => handleModalOpen(value.id)}
                   >
-                    <div className="h-60 flex">
+                    <div className="h-72 flex">
                       <img
                         className="rounded-3xl w-full"
                         src={

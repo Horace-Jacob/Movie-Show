@@ -59,7 +59,7 @@ export const SimilarMovies: React.FC<SimilarMovieProps> = ({ movieID }) => {
             movies.slice(20, movies.length).map((value, index) => (
               <SwiperSlide key={index}>
                 <div className="h-full overflow-visible w-full cursor-pointer">
-                  <div className="h-60 flex">
+                  <div className="h-72 flex">
                     <img
                       className="rounded-3xl w-full"
                       src={
