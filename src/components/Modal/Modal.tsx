@@ -4,33 +4,34 @@ import { SimilarMovies } from "../Similar/SimilarMovies";
 import { RecomMovies } from "../Recom/RecomMovies";
 
 interface ModalProps {
-  IsOpen: boolean;
-  onClose: () => void;
+  IsOpen?: boolean;
+  onClose?: () => void;
   movieDetail: MovieDetails | undefined;
+  isNested?: boolean;
 }
 
 export const Modal: React.FC<ModalProps> = ({
   IsOpen,
   onClose,
   movieDetail,
+  isNested = false,
 }) => {
-
   React.useEffect(() => {
-    if(IsOpen){
+    if (IsOpen) {
       document.body.classList.add("overflow-y-hidden");
-    }else{
+    } else {
       document.body.classList.remove("overflow-y-hidden");
     }
   }, [IsOpen]);
-  
+
   return (
     <>
       {movieDetail !== undefined ? (
         <div
           data-te-modal-init
-          className={`fixed left-0 top-0 z-[1055] ${
-            IsOpen ? "" : "hidden"
-          } ${IsOpen ? "modal-open" : ""} h-full w-full overflow-y-auto overflow-x-hidden outline-none`}
+          className={`fixed left-0 top-0 z-[1055] ${IsOpen ? "" : "hidden"} ${
+            IsOpen ? "modal-open" : ""
+          } h-full w-full overflow-y-auto overflow-x-hidden outline-none`}
           id="exampleModalFullscreen"
           tabIndex={-1}
           aria-labelledby="exampleModalFullscreenLabel"
@@ -50,28 +51,54 @@ export const Modal: React.FC<ModalProps> = ({
                 >
                   {movieDetail?.title}
                 </h5>
-                <button
-                  type="button"
-                  className="box-content rounded-none border-none hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none"
-                  data-te-modal-dismiss
-                  aria-label="Close"
-                  onClick={onClose}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    className="h-6 w-6 text-white"
+                {isNested ? (
+                  <button
+                    type="button"
+                    className="box-content rounded-none border-none hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none"
+                    data-te-modal-dismiss
+                    aria-label="Close"
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  </svg>
-                </button>
+                    <a href="/">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth="1.5"
+                        stroke="currentColor"
+                        className="h-6 w-6 text-white"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M6 18L18 6M6 6l12 12"
+                        />
+                      </svg>
+                    </a>
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    className="box-content rounded-none border-none hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none"
+                    data-te-modal-dismiss
+                    aria-label="Close"
+                    onClick={onClose}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth="1.5"
+                      stroke="currentColor"
+                      className="h-6 w-6 text-white"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M6 18L18 6M6 6l12 12"
+                      />
+                    </svg>
+                  </button>
+                )}
               </div>
 
               <div className="relative p-4 min-[0px]:overflow-y-auto text-white">

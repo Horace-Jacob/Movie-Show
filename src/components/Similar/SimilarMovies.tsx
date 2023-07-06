@@ -2,9 +2,15 @@ import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { AccessToken } from "../../constant";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { Movie, MovieListResponse } from "../../interfaces/MovieInterface";
+import {
+  Movie,
+  MovieDetails,
+  MovieListResponse,
+} from "../../interfaces/MovieInterface";
 import { similarData } from "../../features/SimilarMovies/similarSlice";
 import { fetchSimilarAsync } from "../../features/SimilarMovies/similarThunks";
+import { Modal } from "../Modal/Modal";
+import { fetchMovieDetails } from "../../api/api";
 
 interface SimilarMovieProps {
   movieID: number;
@@ -15,6 +21,23 @@ export const SimilarMovies: React.FC<SimilarMovieProps> = ({ movieID }) => {
   const dispatch = useAppDispatch();
   const [movies, setMovies] = React.useState<Movie[]>([]);
   const [pageNumber, setPageNumber] = React.useState<number>(1);
+  const [isModalOpen, setIsModalOpen] = React.useState<boolean>(true);
+  const [movieDetails, setMovieDetails] = React.useState<MovieDetails>();
+
+  const getMovieDetails = async (movieid: number) => {
+    const res = await fetchMovieDetails(AccessToken, movieid);
+    console.log(movieid);
+    setMovieDetails(res.data);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleModalOpen = async (movieid: number) => {
+    setIsModalOpen(true);
+    getMovieDetails(movieid);
+  };
 
   React.useEffect(() => {
     dispatch(
@@ -48,7 +71,7 @@ export const SimilarMovies: React.FC<SimilarMovieProps> = ({ movieID }) => {
         </h1>
         <Swiper
           spaceBetween={12}
-          slidesPerView={7}
+          slidesPerView={9}
           onSlideChange={handleSlideChange}
           observer={true}
           observeSlideChildren={true}
@@ -58,7 +81,10 @@ export const SimilarMovies: React.FC<SimilarMovieProps> = ({ movieID }) => {
           ) : (
             movies.slice(20, movies.length).map((value, index) => (
               <SwiperSlide key={index}>
-                <div className="h-full overflow-visible w-full cursor-pointer">
+                <div
+                  className="h-full overflow-visible w-full cursor-pointer"
+                  onClick={() => handleModalOpen(value.id)}
+                >
                   <div className="h-72 flex">
                     <img
                       className="rounded-3xl w-full"
@@ -73,6 +99,14 @@ export const SimilarMovies: React.FC<SimilarMovieProps> = ({ movieID }) => {
             ))
           )}
         </Swiper>
+        {movieDetails !== undefined && (
+          <Modal
+            IsOpen={isModalOpen}
+            movieDetail={movieDetails}
+            onClose={handleModalClose}
+            isNested={true}
+          />
+        )}
       </div>
     </div>
   );
