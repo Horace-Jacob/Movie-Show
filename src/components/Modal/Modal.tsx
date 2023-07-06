@@ -1,6 +1,7 @@
 import React from "react";
 import { MovieDetails } from "../../interfaces/MovieInterface";
 import { SimilarMovies } from "../Similar/SimilarMovies";
+import { RecomMovies } from "../Recom/RecomMovies";
 
 interface ModalProps {
   IsOpen: boolean;
@@ -183,6 +184,9 @@ export const Modal: React.FC<ModalProps> = ({
                 </div>
                 <div>
                   <SimilarMovies movieID={movieDetail.id} />
+                </div>
+                <div>
+                  <RecomMovies movieID={movieDetail.id} />
                 </div>
               </div>
             </div>

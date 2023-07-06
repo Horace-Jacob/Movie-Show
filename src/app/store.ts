@@ -4,6 +4,7 @@ import popularSlice from "../features/PopularMovies/popularSlice";
 import actionSlice from "../features/ActionAdventure/actionSlice";
 import romanceSlice from "../features/ComedyRomance/romanceSlice";
 import similarSlice from "../features/SimilarMovies/similarSlice";
+import recomSlice from "../features/Recommendation/recomSlice";
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
     action: actionSlice,
     romance: romanceSlice,
     similar: similarSlice,
+    recom: recomSlice
   },
 });
 

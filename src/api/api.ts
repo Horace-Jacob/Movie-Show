@@ -46,6 +46,23 @@ export const fetchSimilarMovies = async (
   return res;
 };
 
+export const fetchRecommendationMovies = async (
+  access_token: string,
+  movieID: number,
+  pageNumber: number
+) => {
+  const res = await axios.get(
+    `https://api.themoviedb.org/3/movie/${movieID}/recommendations?language=en-US&page=${pageNumber}`,
+    {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+        Accept: "application/json",
+      },
+    }
+  );
+  return res;
+};
+
 export const fetchPopularMovies = async (
   access_token: string,
   page: number
