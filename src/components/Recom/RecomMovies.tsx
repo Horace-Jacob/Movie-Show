@@ -53,6 +53,7 @@ export const RecomMovies: React.FC<RecomMovieProps> = ({ movieID }) => {
     if (Array.isArray(data.results) && data.results.length > 0) {
       setMovies((prevMovies) => [...prevMovies, ...data.results]);
     }
+    console.log(data.results);
   }, [data.results]);
 
   const handleSlideChange = (swiper: any) => {
@@ -69,17 +70,19 @@ export const RecomMovies: React.FC<RecomMovieProps> = ({ movieID }) => {
             Recommendation
           </span>
         </h1>
-        <Swiper
-          spaceBetween={12}
-          slidesPerView={7}
-          onSlideChange={handleSlideChange}
-          observer={true}
-          observeSlideChildren={true}
-        >
-          {!Array.isArray(movies) ? (
-            <div>loading...</div>
-          ) : (
-            movies.slice(20, movies.length).map((value, index) => (
+        {data.results?.length === 0 ? (
+          <div className="text-slate-500">
+            Check back later for recommendations
+          </div>
+        ) : (
+          <Swiper
+            spaceBetween={12}
+            slidesPerView={7}
+            onSlideChange={handleSlideChange}
+            observer={true}
+            observeSlideChildren={true}
+          >
+            {movies.slice(20, movies.length).map((value, index) => (
               <SwiperSlide key={index}>
                 <div
                   className="h-full overflow-visible w-full cursor-pointer"
@@ -96,9 +99,9 @@ export const RecomMovies: React.FC<RecomMovieProps> = ({ movieID }) => {
                   </div>
                 </div>
               </SwiperSlide>
-            ))
-          )}
-        </Swiper>
+            ))}
+          </Swiper>
+        )}
       </div>
       {movieDetails !== undefined && (
         <Modal

@@ -1,4 +1,9 @@
 import React from "react";
+import FastX from "../../images/fastx.jpeg";
+import SpiderVerse from "../../images/spider-verse.jpeg";
+import SuperMario from "../../images/supermario.jpg";
+import Transformers from "../../images/transformers.jpg";
+import Wick from "../../images/wick.jpeg";
 
 export const Header = () => {
   return (
@@ -14,35 +19,35 @@ export const Header = () => {
         >
           <div className="hidden duration-700 ease-in-out" data-carousel-item>
             <img
-              src="https://images3.alphacoders.com/131/1314085.jpeg"
+              src={FastX}
               className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
               alt="..."
             />
           </div>
           <div className="hidden duration-700 ease-in-out" data-carousel-item>
             <img
-              src="https://images7.alphacoders.com/131/1317117.jpeg"
+              src={SpiderVerse}
               className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
               alt="..."
             />
           </div>
           <div className="hidden duration-700 ease-in-out" data-carousel-item>
             <img
-              src="https://images.alphacoders.com/131/1314087.jpeg"
+              src={SuperMario}
               className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
               alt="..."
             />
           </div>
           <div className="hidden duration-700 ease-in-out" data-carousel-item>
             <img
-              src="https://images6.alphacoders.com/117/1177341.jpg"
+              src={Transformers}
               className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
               alt="..."
             />
           </div>
           <div className="hidden duration-700 ease-in-out" data-carousel-item>
             <img
-              src="https://images6.alphacoders.com/130/1302330.jpg"
+              src={Wick}
               className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
               alt="..."
             />

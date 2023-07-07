@@ -35,8 +35,8 @@ export const SimilarMovies: React.FC<SimilarMovieProps> = ({ movieID }) => {
   };
 
   const handleModalOpen = async (movieid: number) => {
+    await getMovieDetails(movieid);
     setIsModalOpen(true);
-    getMovieDetails(movieid);
   };
 
   React.useEffect(() => {
@@ -69,23 +69,28 @@ export const SimilarMovies: React.FC<SimilarMovieProps> = ({ movieID }) => {
             Similar Movies
           </span>
         </h1>
-        <Swiper
-          spaceBetween={12}
-          slidesPerView={7}
-          onSlideChange={handleSlideChange}
-          observer={true}
-          observeSlideChildren={true}
-        >
-          {!Array.isArray(movies) ? (
-            <div>loading...</div>
-          ) : (
-            movies.slice(20, movies.length).map((value, index) => (
+        {data.results === undefined ? (
+          <div className="lds-ellipsis relative">
+            <div className="bg-gradient-to-r from-purple-700 via-blue-400 to-violet-700"></div>
+            <div className="bg-gradient-to-r from-purple-700 via-blue-400 to-violet-700"></div>
+            <div className="bg-gradient-to-r from-purple-700 via-blue-400 to-violet-700"></div>
+            <div className="bg-gradient-to-r from-purple-700 via-blue-400 to-violet-700"></div>
+          </div>
+        ) : (
+          <Swiper
+            spaceBetween={12}
+            slidesPerView={7}
+            onSlideChange={handleSlideChange}
+            observer={true}
+            observeSlideChildren={true}
+          >
+            {movies.slice(20, movies.length).map((value, index) => (
               <SwiperSlide key={index}>
                 <div
                   className="h-full overflow-visible w-full cursor-pointer"
                   onClick={() => handleModalOpen(value.id)}
                 >
-                  <div className=" flex">
+                  <div className="flex">
                     <img
                       className="rounded-3xl w-full"
                       src={
@@ -96,15 +101,16 @@ export const SimilarMovies: React.FC<SimilarMovieProps> = ({ movieID }) => {
                   </div>
                 </div>
               </SwiperSlide>
-            ))
-          )}
-        </Swiper>
+            ))}
+          </Swiper>
+        )}
+
         {movieDetails !== undefined && (
           <Modal
             IsOpen={isModalOpen}
             movieDetail={movieDetails}
-            onClose={handleModalClose}
             isNested={true}
+            onClose={handleModalClose}
           />
         )}
       </div>
