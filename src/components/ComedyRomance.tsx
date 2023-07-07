@@ -77,7 +77,7 @@ export const ComedyRomance = () => {
                   className="h-full overflow-visible w-full cursor-pointer"
                   onClick={() => handleModalOpen(value.id)}
                 >
-                  <div className="h-72 flex">
+                  <div className="flex">
                     <img
                       className="rounded-3xl w-full"
                       src={

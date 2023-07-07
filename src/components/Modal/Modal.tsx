@@ -39,7 +39,7 @@ export const Modal: React.FC<ModalProps> = ({
         >
           <div
             data-te-modal-dialog-ref
-            className={`pointer-events-none relative w-auto  ${
+            className={`md:container md:mx-auto pointer-events-none relative w-auto  ${
               IsOpen ? "opacity-1" : "opacity-0"
             } transition-all duration-300 ease-in-out min-[0px]:m-0 min-[0px]:h-full min-[0px]:max-w-none`}
           >

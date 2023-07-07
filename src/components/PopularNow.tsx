@@ -19,6 +19,7 @@ export const PopularNow = () => {
   const [pageNumber, setPageNumber] = React.useState<number>(1);
   const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
   const [movieDetails, setMovieDetails] = React.useState<MovieDetails>();
+  const [loadingState, setLoadingState] = React.useState<boolean>(false);
 
   const getMovieDetails = async (movieid: number) => {
     const res = await fetchMovieDetails(AccessToken, movieid);
@@ -31,8 +32,12 @@ export const PopularNow = () => {
   };
 
   const handleModalOpen = async (movieid: number) => {
-    await getMovieDetails(movieid);
+    setLoadingState(true);
+    // await getMovieDetails(movieid);
+    document.getElementById("overlay")?.classList.add("overlay");
+    document.body.classList.add("overflow-y-hidden");
     setIsModalOpen(true);
+    setLoadingState(false);
   };
 
   React.useEffect(() => {
@@ -55,6 +60,18 @@ export const PopularNow = () => {
 
   return (
     <div>
+      {/* {movieDetails === undefined ? (
+        <div className="bg-slate-50 absolute left-1/2 top-1/2 z-[9999]">
+          <div className="w-12 h-12 d-flex rounded-full animate-spin
+          border-y border-solid border-yellow-500 border-t-transparent shadow-md"></div>
+        </div>
+      ) : 
+      (<Modal
+        IsOpen={isModalOpen}
+        onClose={handleModalClose}
+        movieDetail={movieDetails}
+      />)
+      } */}
       <section className="overflow-hidden container mx-auto">
         <div className="py-3">
           <h1 className="mb-4 text-2xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-3xl">
@@ -91,7 +108,7 @@ export const PopularNow = () => {
                     className="h-full overflow-visible w-full cursor-pointer"
                     onClick={() => handleModalOpen(value.id)}
                   >
-                    <div className="h-72 flex">
+                    <div className="flex">
                       <img
                         className="rounded-3xl w-full"
                         src={
@@ -107,11 +124,8 @@ export const PopularNow = () => {
           </Swiper>
         </div>
       </section>
-      <Modal
-        IsOpen={isModalOpen}
-        onClose={handleModalClose}
-        movieDetail={movieDetails}
-      />
+      
+      
     </div>
   );
 };

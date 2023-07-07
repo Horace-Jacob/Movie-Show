@@ -71,7 +71,7 @@ export const RecomMovies: React.FC<RecomMovieProps> = ({ movieID }) => {
         </h1>
         <Swiper
           spaceBetween={12}
-          slidesPerView={9}
+          slidesPerView={7}
           onSlideChange={handleSlideChange}
           observer={true}
           observeSlideChildren={true}
@@ -85,7 +85,7 @@ export const RecomMovies: React.FC<RecomMovieProps> = ({ movieID }) => {
                   className="h-full overflow-visible w-full cursor-pointer"
                   onClick={() => handleModalOpen(value.id)}
                 >
-                  <div className="h-72 flex">
+                  <div className="flex">
                     <img
                       className="rounded-3xl w-full"
                       src={
