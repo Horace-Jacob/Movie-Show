@@ -18,7 +18,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export const PopularNow = () => {
-  const data: MovieListResponse = useAppSelector(popularData);
+  const popular: MovieListResponse = useAppSelector(popularData);
   const dispatch = useAppDispatch();
   const [movies, setMovies] = React.useState<Movie[]>([]);
   const [pageNumber, setPageNumber] = React.useState<number>(1);
@@ -29,8 +29,8 @@ export const PopularNow = () => {
     null
   );
 
-  const notify = (option: string) => {
-    toast(`${option === "fav" ? "🥰 movie added to the list" : "🦄 enjoy!"}`, {
+  const notify = () => {
+    toast(`🥰 movie added to the list`, {
       position: "top-left",
       autoClose: 3000,
       hideProgressBar: false,
@@ -66,10 +66,10 @@ export const PopularNow = () => {
   }, [dispatch, pageNumber]);
 
   React.useEffect(() => {
-    if (Array.isArray(data.results) && data.results.length > 0) {
-      setMovies((prevMovies) => [...prevMovies, ...data.results]);
+    if (Array.isArray(popular.results) && popular.results.length > 0) {
+      setMovies((prevMovies) => [...prevMovies, ...popular.results]);
     }
-  }, [data.results]);
+  }, [popular.results]);
 
   const handleSlideChange = (swiper: any) => {
     if (swiper.isEnd && pageNumber !== 3) {
@@ -87,7 +87,7 @@ export const PopularNow = () => {
               Popular Now
             </span>
           </h1>
-          {data.results === undefined ? (
+          {popular.results === undefined ? (
             <div className="lds-ellipsis relative">
               <div className="bg-gradient-to-r from-purple-700 via-blue-400 to-violet-700"></div>
               <div className="bg-gradient-to-r from-purple-700 via-blue-400 to-violet-700"></div>
@@ -126,8 +126,8 @@ export const PopularNow = () => {
                               {value.title}
                             </div>
                             <div
-                              className="flex absolute justify-center 
-                            items-center hover:bg-opacity-25 bottom-16 rounded-lg bg-white 
+                              className="flex absolute justify-center
+                            items-center hover:bg-opacity-25 bottom-16 rounded-lg bg-white
                             bg-opacity-5 hover:rounded-lg z-50"
                               onClick={() => handleModalOpen(value.id)}
                             >
@@ -139,7 +139,7 @@ export const PopularNow = () => {
                               </span>
                             </div>
                             <div
-                              onClick={() => notify("fav")}
+                              onClick={notify}
                               className="flex absolute justify-center items-center hover:bg-opacity-25 bottom-4 rounded-lg bg-white bg-opacity-5 hover:rounded-lg"
                             >
                               <span className="ml-2">

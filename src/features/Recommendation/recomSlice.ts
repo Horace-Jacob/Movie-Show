@@ -40,4 +40,3 @@ export const actions = recomSlice.actions;
 export const recomData = (state: RootState) => state.recom.data;
 
 export default recomSlice.reducer;
-

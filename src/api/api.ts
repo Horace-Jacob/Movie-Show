@@ -13,6 +13,19 @@ export const fetchPosterMovie = async (access_token: string) => {
   return res;
 };
 
+export const searchMovies = async (query: string, access_token: string) => {
+  const res = await axios.get(
+    `https://api.themoviedb.org/3/search/movie?query=${query}&include_adult=true&language=en-US&page=1`,
+    {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+        Accept: "application/json",
+      },
+    }
+  );
+  return res;
+};
+
 export const fetchMovieDetails = async (
   access_token: string,
   movieID: number | undefined

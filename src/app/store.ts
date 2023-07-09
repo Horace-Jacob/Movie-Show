@@ -5,6 +5,7 @@ import actionSlice from "../features/ActionAdventure/actionSlice";
 import romanceSlice from "../features/ComedyRomance/romanceSlice";
 import similarSlice from "../features/SimilarMovies/similarSlice";
 import recomSlice from "../features/Recommendation/recomSlice";
+import navSlice from "../features/NavbarAction/navSlice";
 
 export const store = configureStore({
   reducer: {
@@ -13,7 +14,8 @@ export const store = configureStore({
     action: actionSlice,
     romance: romanceSlice,
     similar: similarSlice,
-    recom: recomSlice
+    recom: recomSlice,
+    nav: navSlice,
   },
 });
 

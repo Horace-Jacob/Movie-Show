@@ -39,4 +39,6 @@ export const actions = actionSlice.actions;
 
 export const actionData = (state: RootState) => state.action.data;
 
+export const testData = (state: RootState) => state.popular.data;
+
 export default actionSlice.reducer;
