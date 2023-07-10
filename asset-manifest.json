@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/Movie-Show/static/css/main.20afc46a.css",
+    "main.js": "/Movie-Show/static/js/main.c7a6bba4.js",
+    "static/media/wick.jpeg": "/Movie-Show/static/media/wick.6d313ac1af0ec530b7e3.jpeg",
+    "static/media/spider-verse.jpeg": "/Movie-Show/static/media/spider-verse.a563158a0e06a4746321.jpeg",
+    "static/media/fastx.jpeg": "/Movie-Show/static/media/fastx.e17087501547b5a02267.jpeg",
+    "static/media/transformers.jpg": "/Movie-Show/static/media/transformers.60f50de355726cd81052.jpg",
+    "static/media/supermario.jpg": "/Movie-Show/static/media/supermario.915e0d8815094c243d38.jpg",
+    "index.html": "/Movie-Show/index.html",
+    "main.20afc46a.css.map": "/Movie-Show/static/css/main.20afc46a.css.map",
+    "main.c7a6bba4.js.map": "/Movie-Show/static/js/main.c7a6bba4.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.20afc46a.css",
+    "static/js/main.c7a6bba4.js"
+  ]
+}
