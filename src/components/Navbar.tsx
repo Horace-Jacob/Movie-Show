@@ -52,13 +52,11 @@ export const Navbar: React.FC<{}> = () => {
       <nav className="bg-white border-gray-200 dark:bg-gray-900 ">
         <div className="container flex flex-wrap items-center justify-between mx-auto p-4">
           <div className="flex items-center">
-            <a href="/">
-              <SiThemoviedatabase
-                className="h-8 mr-3"
-                color="white"
-                size={"27"}
-              />
-            </a>
+            <SiThemoviedatabase
+              className="h-8 mr-3"
+              color="white"
+              size={"27"}
+            />
             <div className="self-center text-sm font-semibold whitespace-nowrap dard:text-white">
               <div className="flex space-x-4">
                 <button
