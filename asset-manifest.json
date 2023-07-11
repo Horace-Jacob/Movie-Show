@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/Movie-Show/static/css/main.20afc46a.css",
-    "main.js": "/Movie-Show/static/js/main.e4f7c77a.js",
+    "main.js": "/Movie-Show/static/js/main.47094004.js",
     "static/media/wick.jpeg": "/Movie-Show/static/media/wick.6d313ac1af0ec530b7e3.jpeg",
     "static/media/spider-verse.jpeg": "/Movie-Show/static/media/spider-verse.a563158a0e06a4746321.jpeg",
     "static/media/fastx.jpeg": "/Movie-Show/static/media/fastx.e17087501547b5a02267.jpeg",
@@ -9,10 +9,10 @@
     "static/media/supermario.jpg": "/Movie-Show/static/media/supermario.915e0d8815094c243d38.jpg",
     "index.html": "/Movie-Show/index.html",
     "main.20afc46a.css.map": "/Movie-Show/static/css/main.20afc46a.css.map",
-    "main.e4f7c77a.js.map": "/Movie-Show/static/js/main.e4f7c77a.js.map"
+    "main.47094004.js.map": "/Movie-Show/static/js/main.47094004.js.map"
   },
   "entrypoints": [
     "static/css/main.20afc46a.css",
-    "static/js/main.e4f7c77a.js"
+    "static/js/main.47094004.js"
   ]
 }
