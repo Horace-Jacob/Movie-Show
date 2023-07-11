@@ -5,6 +5,7 @@ import { AccessToken } from "../constant";
 import { Movie } from "../interfaces/MovieInterface";
 import { Overlay } from "./Overlay/Overlay";
 import { SearchModal } from "./SearchModal/SearchModal";
+import { SiThemoviedatabase } from "react-icons/si";
 
 export const Navbar: React.FC<{}> = () => {
   const [searchQuery, setSearchQuery] = React.useState<string>("");
@@ -52,10 +53,10 @@ export const Navbar: React.FC<{}> = () => {
         <div className="container flex flex-wrap items-center justify-between mx-auto p-4">
           <div className="flex items-center">
             <a href="/">
-              <img
-                src="https://flowbite.com/docs/images/logo.svg"
+              <SiThemoviedatabase
                 className="h-8 mr-3"
-                alt="Flowbite Logo"
+                color="white"
+                size={"27"}
               />
             </a>
             <div className="self-center text-sm font-semibold whitespace-nowrap dard:text-white">
