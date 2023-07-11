@@ -4,10 +4,9 @@ import { searchMovies } from "../api/api";
 import { AccessToken } from "../constant";
 import { Movie } from "../interfaces/MovieInterface";
 import { Overlay } from "./Overlay/Overlay";
-import { Modal } from "./Modal/Modal";
 import { SearchModal } from "./SearchModal/SearchModal";
 
-export const Navbar: React.FC<{}> = ({}) => {
+export const Navbar: React.FC<{}> = () => {
   const [searchQuery, setSearchQuery] = React.useState<string>("");
   const [searchResult, setSearchResult] = React.useState<Movie[]>();
   const [loadingState, setLoadingState] = React.useState<boolean>(false);

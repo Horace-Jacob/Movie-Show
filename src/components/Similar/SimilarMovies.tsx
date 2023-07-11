@@ -47,7 +47,7 @@ export const SimilarMovies: React.FC<SimilarMovieProps> = ({ movieID }) => {
         page: pageNumber,
       })
     );
-  }, [dispatch, pageNumber, movieID]);
+  }, [movieID, dispatch, pageNumber]);
 
   React.useEffect(() => {
     if (Array.isArray(data.results) && data.results.length > 0) {
@@ -84,7 +84,7 @@ export const SimilarMovies: React.FC<SimilarMovieProps> = ({ movieID }) => {
             observer={true}
             observeSlideChildren={true}
           >
-            {movies.slice(20, movies.length).map((value, index) => (
+            {movies.map((value, index) => (
               <SwiperSlide key={index}>
                 <div
                   className="h-full overflow-visible w-full cursor-pointer"

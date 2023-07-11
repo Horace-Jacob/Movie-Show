@@ -106,7 +106,7 @@ export const SearchModal: React.FC<ModalProps> = ({
                   <div className="columns-4">
                     {movies.map((value, index) => {
                       if (value.poster_path === null) {
-                        return <div></div>;
+                        return false;
                       }
                       return (
                         <div

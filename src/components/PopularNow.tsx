@@ -69,7 +69,7 @@ export const PopularNow = () => {
     if (Array.isArray(popular.results) && popular.results.length > 0) {
       setMovies((prevMovies) => [...prevMovies, ...popular.results]);
     }
-  }, [popular.results]);
+  }, [popular]);
 
   const handleSlideChange = (swiper: any) => {
     if (swiper.isEnd && pageNumber !== 3) {
@@ -102,7 +102,7 @@ export const PopularNow = () => {
               observer={true}
               observeSlideChildren={true}
             >
-              {movies.slice(20, movies.length).map((value, index) => {
+              {movies.map((value, index) => {
                 const isCardHovered = hoveredCardIndex === index;
                 return (
                   <SwiperSlide key={index}>

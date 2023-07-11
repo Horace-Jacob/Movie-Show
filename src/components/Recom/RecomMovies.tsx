@@ -53,7 +53,6 @@ export const RecomMovies: React.FC<RecomMovieProps> = ({ movieID }) => {
     if (Array.isArray(data.results) && data.results.length > 0) {
       setMovies((prevMovies) => [...prevMovies, ...data.results]);
     }
-    console.log(data.results);
   }, [data.results]);
 
   const handleSlideChange = (swiper: any) => {
@@ -82,7 +81,7 @@ export const RecomMovies: React.FC<RecomMovieProps> = ({ movieID }) => {
             observer={true}
             observeSlideChildren={true}
           >
-            {movies.slice(20, movies.length).map((value, index) => (
+            {movies.map((value, index) => (
               <SwiperSlide key={index}>
                 <div
                   className="h-full overflow-visible w-full cursor-pointer"

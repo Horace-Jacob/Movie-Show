@@ -16,7 +16,11 @@ const initialState: initialStateInterface = {
 export const popularSlice = createSlice({
   name: "popular",
   initialState,
-  reducers: {},
+  reducers: {
+    updateData: (state, action: PayloadAction<MovieListResponse>) => {
+      state.data = action.payload;
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchPopularAsync.pending, (state) => {
@@ -35,7 +39,7 @@ export const popularSlice = createSlice({
   },
 });
 
-export const actions = popularSlice.actions;
+export const { updateData } = popularSlice.actions;
 
 export const popularData = (state: RootState) => state.popular.data;
 

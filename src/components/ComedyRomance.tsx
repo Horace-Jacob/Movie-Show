@@ -101,7 +101,7 @@ export const ComedyRomance = () => {
             observer={true}
             observeSlideChildren={true}
           >
-            {movies.slice(20, movies.length).map((value, index) => {
+            {movies.map((value, index) => {
               const isCardHovered = hoveredCardIndex === index;
               return (
                 <SwiperSlide key={index}>
