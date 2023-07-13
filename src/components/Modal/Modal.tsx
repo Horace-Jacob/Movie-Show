@@ -57,7 +57,7 @@ export const Modal: React.FC<ModalProps> = ({
                   data-te-modal-dismiss
                   aria-label="Close"
                 >
-                  <a href="/">
+                  <a href="/Movie-Show">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"

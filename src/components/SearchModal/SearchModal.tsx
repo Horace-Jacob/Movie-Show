@@ -1,5 +1,11 @@
 import React from "react";
-import { Movie } from "../../interfaces/MovieInterface";
+import { Movie, MovieDetails } from "../../interfaces/MovieInterface";
+import { RiMovieLine } from "react-icons/ri";
+import { AiOutlinePlus } from "react-icons/ai";
+import { ToastContainer, toast } from "react-toastify";
+import { Modal } from "../Modal/Modal";
+import { fetchMovieDetails } from "../../api/api";
+import { AccessToken } from "../../constant";
 
 interface ModalProps {
   IsOpen?: boolean;
@@ -16,6 +22,25 @@ export const SearchModal: React.FC<ModalProps> = ({
   isNested = false,
   searchQuery,
 }) => {
+  const [hoveredCardIndex, setHoveredCardIndex] = React.useState<number | null>(
+    null
+  );
+  const [isModalOpen, setIsModalOpen] = React.useState<boolean>(true);
+  const [movieDetails, setMovieDetails] = React.useState<MovieDetails>();
+  const getMovieDetails = async (movieid: number) => {
+    const res = await fetchMovieDetails(AccessToken, movieid);
+    setMovieDetails(res.data);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
+
+  
+  const handleModalOpen = async (movieid: number) => {
+    await getMovieDetails(movieid);
+    setIsModalOpen(true);
+  };
   React.useEffect(() => {
     if (IsOpen) {
       document.body.classList.add("overflow-y-hidden");
@@ -24,8 +49,22 @@ export const SearchModal: React.FC<ModalProps> = ({
     }
   }, [IsOpen]);
 
+  const notify = () => {
+    toast(`🥰 movie added to the list`, {
+      position: "top-left",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+  };
+
   return (
     <>
+    <ToastContainer />
       <div
         data-te-modal-init
         className={`fixed left-0 top-0 z-[1055] ${IsOpen ? "" : "hidden"} ${
@@ -103,34 +142,60 @@ export const SearchModal: React.FC<ModalProps> = ({
             {movies !== undefined ? (
               <div className="relative p-4 min-[0px]:overflow-y-auto text-white">
                 <div className="row-auto">
-                  <div className="columns-4">
+                  <div className="columns-7 max-md:columns-5 max-sm:columns-3">
                     {movies.map((value, index) => {
-                      if (value.poster_path === null) {
+                      const isCardHovered = hoveredCardIndex === index;
+                      if(value.backdrop_path === null){
                         return false;
                       }
                       return (
                         <div
-                          className="max-w-sm rounded-lg shadow py-3"
-                          key={index}
-                        >
-                          <a
-                            href={
-                              "https://image.tmdb.org/t/p/w500" +
-                              value?.poster_path
-                            }
-                            rel="noreferrer"
-                            target="_blank"
-                          >
-                            <img
-                              className="rounded-lg"
-                              src={
-                                "https://image.tmdb.org/t/p/w500" +
-                                value?.poster_path
-                              }
-                              alt=""
-                            />
-                          </a>
-                        </div>
+                      className="h-full overflow-visible w-full cursor-pointer relative"
+                      onMouseEnter={() => setHoveredCardIndex(index)}
+                      onMouseLeave={() => setHoveredCardIndex(null)}
+                    >
+                      <div className="flex">
+                        <img
+                          className="rounded-3xl w-full"
+                          src={
+                            "https://image.tmdb.org/t/p/w500" +
+                            value.poster_path
+                          }
+                          alt=""
+                        />
+                        {isCardHovered && (
+                          <div className="absolute top-0 right-0 bottom-0 left-0 bg-black bg-opacity-80 transition ease-in-out delay-150 duration-300">
+                            <div className="text-slate-200 m-2 max-sm:text-xs max-md:text-xs">
+                              {value.title}
+                            </div>
+                            <div
+                              className="flex absolute justify-center
+                            items-center hover:bg-opacity-25 bottom-14 rounded-lg hover:bg-white
+                            bg-opacity-5 hover:rounded-lg z-50"
+                              onClick={() => handleModalOpen(value.id)}
+                            >
+                              <span className="ml-2">
+                                <RiMovieLine color="white" />
+                              </span>
+                              <span className="text-white m-2 max-sm:text-xs max-md:text-xs">
+                                Details
+                              </span>
+                            </div>
+                            <div
+                              onClick={notify}
+                              className="flex absolute justify-center items-center hover:bg-opacity-25 bottom-4 rounded-lg hover:bg-white bg-opacity-5 hover:rounded-lg"
+                            >
+                              <span className="ml-2">
+                                <AiOutlinePlus color="white" />
+                              </span>
+                              <span className="text-white m-2 max-sm:text-xs max-md:text-xs">
+                                Watchlist
+                              </span>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
                       );
                     })}
                   </div>
@@ -141,6 +206,14 @@ export const SearchModal: React.FC<ModalProps> = ({
             )}
           </div>
         </div>
+        {movieDetails !== undefined && (
+          <Modal
+            IsOpen={isModalOpen}
+            movieDetail={movieDetails}
+            
+            onClose={handleModalClose}
+          />
+        )}
       </div>
     </>
   );

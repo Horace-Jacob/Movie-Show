@@ -83,3 +83,13 @@ body {
     transform: translate(24px, 0);
   }
 }
+
+/* .swiper-container{
+  width: 480px;
+}
+
+@media screen and (max-width: 640px) {
+  .swiper-container{
+    width: 200px;
+  }
+} */

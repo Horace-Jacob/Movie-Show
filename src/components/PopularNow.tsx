@@ -101,6 +101,22 @@ export const PopularNow = () => {
               onSlideChange={handleSlideChange}
               observer={true}
               observeSlideChildren={true}
+              breakpoints={{
+                // when window width is >= 640px
+                380:{
+                  slidesPerView: 3,
+                },
+                640: {
+                  slidesPerView: 3,
+                },
+                // when window width is >= 768px
+                768: {
+                  slidesPerView: 5,
+                },
+                1024: {
+                  slidesPerView: 7
+                }
+              }}
             >
               {movies.map((value, index) => {
                 const isCardHovered = hoveredCardIndex === index;
@@ -122,31 +138,31 @@ export const PopularNow = () => {
                         />
                         {isCardHovered && (
                           <div className="absolute top-0 right-0 bottom-0 left-0 bg-black bg-opacity-80 transition ease-in-out delay-150 duration-300">
-                            <div className="text-slate-200 m-2">
+                            <div className="text-slate-200 m-2 max-sm:text-xs max-md:text-xs">
                               {value.title}
                             </div>
                             <div
                               className="flex absolute justify-center
-                            items-center hover:bg-opacity-25 bottom-16 rounded-lg bg-white
+                            items-center hover:bg-opacity-25 bottom-14 rounded-lg hover:bg-white
                             bg-opacity-5 hover:rounded-lg z-50"
                               onClick={() => handleModalOpen(value.id)}
                             >
                               <span className="ml-2">
                                 <RiMovieLine color="white" />
                               </span>
-                              <span className="text-white m-2">
-                                View Details
+                              <span className="text-white m-2 max-sm:text-xs max-md:text-xs">
+                                Details
                               </span>
                             </div>
                             <div
                               onClick={notify}
-                              className="flex absolute justify-center items-center hover:bg-opacity-25 bottom-4 rounded-lg bg-white bg-opacity-5 hover:rounded-lg"
+                              className="flex absolute justify-center items-center hover:bg-opacity-25 bottom-4 rounded-lg hover:bg-white bg-opacity-5 hover:rounded-lg"
                             >
                               <span className="ml-2">
                                 <AiOutlinePlus color="white" />
                               </span>
-                              <span className="text-white m-2">
-                                Add to favourite
+                              <span className="text-white m-2 max-sm:text-xs max-md:text-xs">
+                                Watchlist
                               </span>
                             </div>
                           </div>

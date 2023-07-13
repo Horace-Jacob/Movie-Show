@@ -11,6 +11,9 @@ import { recomData } from "../../features/Recommendation/recomSlice";
 import { fetchRecommendationAsync } from "../../features/Recommendation/recomThunks";
 import { fetchMovieDetails } from "../../api/api";
 import { Modal } from "../Modal/Modal";
+import { ToastContainer, toast } from "react-toastify";
+import { RiMovieLine } from "react-icons/ri";
+import { AiOutlinePlus } from "react-icons/ai";
 
 interface RecomMovieProps {
   movieID: number;
@@ -23,6 +26,22 @@ export const RecomMovies: React.FC<RecomMovieProps> = ({ movieID }) => {
   const [pageNumber, setPageNumber] = React.useState<number>(1);
   const [isModalOpen, setIsModalOpen] = React.useState<boolean>(true);
   const [movieDetails, setMovieDetails] = React.useState<MovieDetails>();
+  const [hoveredCardIndex, setHoveredCardIndex] = React.useState<number | null>(
+    null
+  );
+
+  const notify = () => {
+    toast(`🥰 movie added to the list`, {
+      position: "top-left",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+  };
 
   const getMovieDetails = async (movieid: number) => {
     const res = await fetchMovieDetails(AccessToken, movieid);
@@ -63,6 +82,7 @@ export const RecomMovies: React.FC<RecomMovieProps> = ({ movieID }) => {
 
   return (
     <div>
+      <ToastContainer/>
       <div className="py-3">
         <h1 className="mb-4 text-2xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-3xl">
           <span className="bg-gradient-to-r from-neutral-200 via-violet-600 to-violet-600 bg-clip-text text-transparent">
@@ -75,31 +95,83 @@ export const RecomMovies: React.FC<RecomMovieProps> = ({ movieID }) => {
           </div>
         ) : (
           <Swiper
-            spaceBetween={12}
-            slidesPerView={7}
-            onSlideChange={handleSlideChange}
-            observer={true}
-            observeSlideChildren={true}
-          >
-            {movies.map((value, index) => (
-              <SwiperSlide key={index}>
-                <div
-                  className="h-full overflow-visible w-full cursor-pointer"
-                  onClick={() => handleModalOpen(value.id)}
-                >
-                  <div className="flex">
-                    <img
-                      className="rounded-3xl w-full"
-                      src={
-                        "https://image.tmdb.org/t/p/w500" + value.poster_path
-                      }
-                      alt=""
-                    />
-                  </div>
-                </div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
+              spaceBetween={12}
+              slidesPerView={7}
+              onSlideChange={handleSlideChange}
+              observer={true}
+              observeSlideChildren={true}
+              breakpoints={{
+                // when window width is >= 640px
+                380:{
+                  slidesPerView: 3,
+                },
+                640: {
+                  slidesPerView: 3,
+                },
+                // when window width is >= 768px
+                768: {
+                  slidesPerView: 5,
+                },
+                1024: {
+                  slidesPerView: 7
+                }
+              }}
+            >
+              {movies.map((value, index) => {
+                const isCardHovered = hoveredCardIndex === index;
+                return (
+                  <SwiperSlide key={index}>
+                    <div
+                      className="h-full overflow-visible w-full cursor-pointer relative"
+                      onMouseEnter={() => setHoveredCardIndex(index)}
+                      onMouseLeave={() => setHoveredCardIndex(null)}
+                    >
+                      <div className="flex">
+                        <img
+                          className="rounded-3xl w-full"
+                          src={
+                            "https://image.tmdb.org/t/p/w500" +
+                            value.poster_path
+                          }
+                          alt=""
+                        />
+                        {isCardHovered && (
+                          <div className="absolute top-0 right-0 bottom-0 left-0 bg-black bg-opacity-80 transition ease-in-out delay-150 duration-300">
+                            <div className="text-slate-200 m-2 max-sm:text-xs max-md:text-xs">
+                              {value.title}
+                            </div>
+                            <div
+                              className="flex absolute justify-center
+                            items-center hover:bg-opacity-25 bottom-14 rounded-lg hover:bg-white
+                            bg-opacity-5 hover:rounded-lg z-50"
+                              onClick={() => handleModalOpen(value.id)}
+                            >
+                              <span className="ml-2">
+                                <RiMovieLine color="white" />
+                              </span>
+                              <span className="text-white m-2 max-sm:text-xs max-md:text-xs">
+                                Details
+                              </span>
+                            </div>
+                            <div
+                              onClick={notify}
+                              className="flex absolute justify-center items-center hover:bg-opacity-25 bottom-4 rounded-lg hover:bg-white bg-opacity-5 hover:rounded-lg"
+                            >
+                              <span className="ml-2">
+                                <AiOutlinePlus color="white" />
+                              </span>
+                              <span className="text-white m-2 max-sm:text-xs max-md:text-xs">
+                                Watchlist
+                              </span>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </SwiperSlide>
+                );
+              })}
+            </Swiper>
         )}
       </div>
       {movieDetails !== undefined && (
